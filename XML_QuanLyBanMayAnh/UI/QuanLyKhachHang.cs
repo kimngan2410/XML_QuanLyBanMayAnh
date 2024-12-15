@@ -285,7 +285,50 @@ namespace XML_QuanLyBanMayAnh.UI
 
         private void button5_Click(object sender, EventArgs e)
         {
+            try
+            {
+                // Lấy từ khóa tìm kiếm từ TextBox
+                string keyword = txtTimKiem.Text.Trim();
 
+                // Kiểm tra nếu từ khóa rỗng
+                if (string.IsNullOrWhiteSpace(keyword))
+                {
+                    MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm!");
+                    return;
+                }
+
+                using (var connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+
+                    // Tạo câu lệnh SQL tìm kiếm (sử dụng LIKE để tìm kiếm tương đối)
+                    string sqlSearch = "SELECT * FROM KhachHang WHERE maKH LIKE @keyword OR tenKH LIKE @keyword OR diaChi LIKE @keyword OR SDT LIKE @keyword";
+
+                    using (var cmdSearch = new SqlCommand(sqlSearch, connection))
+                    {
+                        // Thêm tham số từ khóa tìm kiếm
+                        cmdSearch.Parameters.AddWithValue("@keyword", "%" + keyword + "%");
+
+                        SqlDataAdapter adapter = new SqlDataAdapter(cmdSearch);
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+
+                        // Hiển thị kết quả tìm kiếm lên DataGridView
+                        dgvKH.DataSource = dt;
+
+                        // Kiểm tra nếu không có kết quả
+                        if (dt.Rows.Count == 0)
+                        {
+                            MessageBox.Show("Không tìm thấy khách hàng nào phù hợp!");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra khi tìm kiếm: " + ex.Message);
+            }
         }
+
     }
 }

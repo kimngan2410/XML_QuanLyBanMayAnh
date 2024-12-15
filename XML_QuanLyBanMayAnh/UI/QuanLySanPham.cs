@@ -14,7 +14,7 @@ namespace XML_QuanLyBanMayAnh.UI
 {
     public partial class QuanLySanPham : Form
     {
-        private string strCon = "Data Source=DESKTOP-74S139L;Initial Catalog=QuanLyBanMayAnh2;Integrated Security=True";
+        private string strCon = "Data Source=localhost;Initial Catalog=QuanLyBanMayAnh2;Integrated Security=True";
         private string fileXML = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "SanPham.xml");
         private taoXML taoXML = new taoXML();
         public QuanLySanPham()
