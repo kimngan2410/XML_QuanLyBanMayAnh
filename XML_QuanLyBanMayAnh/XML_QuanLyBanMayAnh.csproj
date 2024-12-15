@@ -52,7 +52,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="taoXML.cs" />
+    <Compile Include="TaoXML.cs" />
     <Compile Include="UI\HoaDonBanHan.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -18,22 +18,12 @@ namespace XML_QuanLyBanMayAnh
         string strCon = " Data Source =localhost; Initial Catalog = QuanLyBanMayAnh2; Integrated Security = True";
         public void TaoXML(string sql, string bang, string _FileXML)
         {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(strCon))
-                {
-                    con.Open();
-                    SqlDataAdapter ad = new SqlDataAdapter(sql, con);
-                    DataTable dt = new DataTable(bang);
-                    ad.Fill(dt);
-                    string filePath = Path.Combine(Application.StartupPath, _FileXML);
-                    dt.WriteXml(filePath, XmlWriteMode.WriteSchema);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi tạo file XML: " + ex.Message);
-            }
+            SqlConnection con = new SqlConnection(strCon);
+            con.Open();
+            SqlDataAdapter ad = new SqlDataAdapter(sql, con);
+            DataTable dt = new DataTable(bang);
+            ad.Fill(dt);
+            dt.WriteXml(_FileXML, XmlWriteMode.WriteSchema);
         }
         public DataTable loadDataGridView(string _FileXML)
         {
@@ -145,7 +135,7 @@ namespace XML_QuanLyBanMayAnh
         {
             string txtMa = "";
             DataTable dt = new DataTable();
-            dt =loadDataGridView(_FileXML);
+            dt = loadDataGridView(_FileXML);
             int dem = dt.Rows.Count;
             if (dem == 0)
             {
@@ -211,12 +201,12 @@ namespace XML_QuanLyBanMayAnh
             if (dong > -1)
             {
                 string sql = "update " + tenBang + " set ";
-                for (int j = 0; j < table.Columns.Count-1; j++)
+                for (int j = 0; j < table.Columns.Count - 1; j++)
                 {
                     sql += table.Columns[j].ToString() + " = N'" + table.Rows[dong][j].ToString().Trim() + "', ";
                 }
                 sql += table.Columns[table.Columns.Count - 1].ToString() + " = N'" + table.Rows[dong][table.Columns.Count - 1].ToString().Trim() + "' ";
-                sql += "where " + tenCot + "= '" + giaTri +"'";
+                sql += "where " + tenCot + "= '" + giaTri + "'";
                 exCuteNonQuery(sql);
             }
         }
@@ -237,7 +227,7 @@ namespace XML_QuanLyBanMayAnh
                 {
                     if (table.Rows[dong][tenCot].ToString().Trim() == giaTri)
                     {
-                        sql += tenCot + " = '" + giaTri+ "'";
+                        sql += tenCot + " = '" + giaTri + "'";
                     }
                 }
                 exCuteNonQuery(sql);
@@ -263,10 +253,10 @@ namespace XML_QuanLyBanMayAnh
         public void TimKiemXSLT(string data, string tenFileXML, string tenfileXSLT)
         {
             XslCompiledTransform xslt = new XslCompiledTransform();
-            xslt.Load(""+tenfileXSLT+".xslt");
+            xslt.Load("" + tenfileXSLT + ".xslt");
             XsltArgumentList argList = new XsltArgumentList();
             argList.AddParam("Data", "", data);
-            XmlWriter writer = XmlWriter.Create(""+tenFileXML+".html");
+            XmlWriter writer = XmlWriter.Create("" + tenFileXML + ".html");
             xslt.Transform(new XPathDocument("" + tenFileXML + ".xml"), argList, writer);
             writer.Close();
             System.Diagnostics.Process.Start("" + tenFileXML + ".html");
