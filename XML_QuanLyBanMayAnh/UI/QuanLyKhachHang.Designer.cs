@@ -46,6 +46,8 @@
             this.Button3 = new System.Windows.Forms.Button();
             this.Button2 = new System.Windows.Forms.Button();
             this.Button1 = new System.Windows.Forms.Button();
+            this.txtTimKiem = new System.Windows.Forms.TextBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.GroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKH)).BeginInit();
             this.GroupBox1.SuspendLayout();
@@ -82,6 +84,7 @@
             this.dgvKH.RowTemplate.Height = 24;
             this.dgvKH.Size = new System.Drawing.Size(982, 227);
             this.dgvKH.TabIndex = 0;
+            this.dgvKH.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvKH_CellClick);
             // 
             // txtTenKh
             // 
@@ -172,6 +175,8 @@
             // 
             // Panel1
             // 
+            this.Panel1.Controls.Add(this.txtTimKiem);
+            this.Panel1.Controls.Add(this.button5);
             this.Panel1.Controls.Add(this.Button6);
             this.Panel1.Controls.Add(this.Button4);
             this.Panel1.Controls.Add(this.Button3);
@@ -197,6 +202,7 @@
             this.Button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button6.UseVisualStyleBackColor = true;
+            this.Button6.Click += new System.EventHandler(this.Button6_Click);
             // 
             // Button4
             // 
@@ -210,6 +216,7 @@
             this.Button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button4.UseVisualStyleBackColor = true;
+            this.Button4.Click += new System.EventHandler(this.Button4_Click);
             // 
             // Button3
             // 
@@ -223,6 +230,7 @@
             this.Button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button3.UseVisualStyleBackColor = true;
+            this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // Button2
             // 
@@ -236,6 +244,7 @@
             this.Button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button2.UseVisualStyleBackColor = true;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // Button1
             // 
@@ -249,6 +258,26 @@
             this.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button1.UseVisualStyleBackColor = true;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // txtTimKiem
+            // 
+            this.txtTimKiem.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtTimKiem.Location = new System.Drawing.Point(616, 30);
+            this.txtTimKiem.Name = "txtTimKiem";
+            this.txtTimKiem.Size = new System.Drawing.Size(328, 28);
+            this.txtTimKiem.TabIndex = 15;
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Location = new System.Drawing.Point(966, 23);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(112, 40);
+            this.button5.TabIndex = 14;
+            this.button5.Text = "Tìm kiếm";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // QuanLyKhachHang
             // 
@@ -259,6 +288,7 @@
             this.Controls.Add(this.Panel1);
             this.Name = "QuanLyKhachHang";
             this.Text = "QuanLyKhachHang";
+            this.Load += new System.EventHandler(this.QuanLyKhachHang_Load);
             this.GroupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvKH)).EndInit();
             this.GroupBox1.ResumeLayout(false);
@@ -289,5 +319,7 @@
         internal System.Windows.Forms.TextBox txtDiaChi;
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.Panel Panel1;
+        internal System.Windows.Forms.TextBox txtTimKiem;
+        internal System.Windows.Forms.Button button5;
     }
 }

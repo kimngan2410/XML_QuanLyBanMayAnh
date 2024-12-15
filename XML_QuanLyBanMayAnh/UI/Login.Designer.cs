@@ -71,7 +71,6 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(358, 32);
             this.txtPass.TabIndex = 19;
-            this.txtPass.Text = " Mật khẩu";
             this.txtPass.UseSystemPasswordChar = true;
             // 
             // txtTendangnhap
@@ -82,7 +81,7 @@
             this.txtTendangnhap.Name = "txtTendangnhap";
             this.txtTendangnhap.Size = new System.Drawing.Size(358, 32);
             this.txtTendangnhap.TabIndex = 18;
-            this.txtTendangnhap.Text = " Tên đăng nhập";
+            this.txtTendangnhap.TextChanged += new System.EventHandler(this.txtTendangnhap_TextChanged);
             // 
             // Button2
             // 
