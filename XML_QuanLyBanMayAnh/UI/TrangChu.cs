@@ -66,5 +66,12 @@ namespace XML_QuanLyBanMayAnh.UI
         {
 
         }
+
+        private void đăngXuấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Login frm = new Login();
+            frm.Show();
+        }
     }
 }

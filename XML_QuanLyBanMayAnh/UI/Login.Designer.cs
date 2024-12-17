@@ -72,7 +72,11 @@
             this.txtPass.Name = "txtPass";
             this.txtPass.Size = new System.Drawing.Size(358, 32);
             this.txtPass.TabIndex = 19;
+            this.txtPass.Text = "Mật khẩu";
             this.txtPass.UseSystemPasswordChar = true;
+            this.txtPass.TextChanged += new System.EventHandler(this.txtPass_Enter);
+            this.txtPass.Enter += new System.EventHandler(this.txtPass_Enter);
+            this.txtPass.Leave += new System.EventHandler(this.txtPass_Leave);
             // 
             // txtTendangnhap
             // 
@@ -82,7 +86,10 @@
             this.txtTendangnhap.Name = "txtTendangnhap";
             this.txtTendangnhap.Size = new System.Drawing.Size(358, 32);
             this.txtTendangnhap.TabIndex = 18;
-            this.txtTendangnhap.TextChanged += new System.EventHandler(this.txtTendangnhap_TextChanged);
+            this.txtTendangnhap.Text = "Tên đăng nhập";
+            this.txtTendangnhap.TextChanged += new System.EventHandler(this.txtTendangnhap_Enter);
+            this.txtTendangnhap.Enter += new System.EventHandler(this.txtTendangnhap_Enter);
+            this.txtTendangnhap.Leave += new System.EventHandler(this.txtTendangnhap_Leave);
             // 
             // Button2
             // 

@@ -255,7 +255,7 @@ namespace XML_QuanLyBanMayAnh.UI
         }
 
 
-        
+
 
         private void dgvHD_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -503,7 +503,7 @@ namespace XML_QuanLyBanMayAnh.UI
             // Kiểm tra dữ liệu nhập vào
             if (string.IsNullOrWhiteSpace(txtMaDH.Text) ||
                 string.IsNullOrWhiteSpace(cbbKhachhang.Text) ||
-                string.IsNullOrWhiteSpace(cbbNhanVien.Text) )
+                string.IsNullOrWhiteSpace(cbbNhanVien.Text))
             {
                 MessageBox.Show("Vui lòng điền đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -535,7 +535,7 @@ namespace XML_QuanLyBanMayAnh.UI
 
                     cmd.Parameters.AddWithValue("@maHD", txtMaDH.Text);
                     cmd.Parameters.AddWithValue("@maNV", cbbNhanVien.SelectedValue);
-                    cmd.Parameters.AddWithValue("@maKH", cbbKhachhang.SelectedValue); 
+                    cmd.Parameters.AddWithValue("@maKH", cbbKhachhang.SelectedValue);
                     cmd.Parameters.AddWithValue("@ngayLapDon", dtpngaydathang.Value);
 
                     cmd.ExecuteNonQuery();
@@ -939,49 +939,13 @@ namespace XML_QuanLyBanMayAnh.UI
         XDocument xItem;
         private void inHoaDon()
         {
-
-            string pathHTML = "ChiTietHoaDon.html";
-            xItem = XDocument.Load("./ChiTietHoaDon.xml");
-            var xI = xItem.Descendants("_x0027_ChiTietHoaDon_x0027_");
-
-            var html = new XElement("html", // Tạo cây HTML trong bộ nhớ
-            new XElement("head",
-            new XElement("style", "table{border:solid 1px red;border - collapse: collapse}", "td{border:solid 1px silver;}")),
-            new XElement("body",
-            new XElement("h2", "Chi Tiết Hoá Đơn"),
-            new XElement("table",
-                new XElement("tr",
-                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Mã Hoá Đơn"),
-                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Mã Sản Phẩm"),
-                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Số Lượng Đặt"),
-                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Đơn Giá")),
-            from el in xI
-            select new XElement("tr",
-                        new XElement("td", el.Element("maDH").Value),
-                        new XElement("td", el.Element("maSP").Value),
-                        new XElement("td", el.Element("soLuongDat").Value),
-                        new XElement("td",
-                            new XAttribute("style", "text-align:right"),
-                            el.Element("donGia").Value)))));
-            html.Save(pathHTML);
-            Process.Start(pathHTML);
-
-        }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            inHoaDon();
-        }
-
-        XDocument xItem;
-        private void inHoaDon()
-        {
             if (string.IsNullOrWhiteSpace(OldMaHD))
             {
                 MessageBox.Show("Vui lòng chọn một hóa đơn trước khi in chi tiết hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
+            string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "./ChiTietHoaDon.xml");
             string pathHTML = "ChiTietHoaDon.html";
 
             try
