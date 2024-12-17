@@ -17,6 +17,9 @@ namespace XML_QuanLyBanMayAnh.UI
         private string strCon = "Data Source=localhost;Initial Catalog=QuanLyBanMayAnh2;Integrated Security=True";
         private string fileXML = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "HoaDonBanHang.xml");
         private taoXML taoXML = new taoXML();
+        // Biến lưu mã hóa đơn cũ khi click vào DataGridView
+        private string OldMaHD;
+        private string OldMaSP; // Lưu mã sản phẩm cũ
         public HoaDonBanHan()
         {
             InitializeComponent();
@@ -245,15 +248,19 @@ namespace XML_QuanLyBanMayAnh.UI
         }
 
 
+        
+
         private void dgvHD_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
                 try
                 {
-                    string maHD = dgvHD.Rows[e.RowIndex].Cells["maHD"].Value.ToString();
+                    // Lấy mã hóa đơn cũ từ bảng và gán cho OldMaHD
+                    OldMaHD = dgvHD.Rows[e.RowIndex].Cells["maHD"].Value.ToString();
+
                     // Hiển thị mã hóa đơn và thông tin khác
-                    txtMaDH.Text = maHD;
+                    txtMaDH.Text = OldMaHD;
                     txttenKH.Text = ""; // Đặt tạm để tra cứu lại
                     cbbKhachhang.Text = dgvHD.Rows[e.RowIndex].Cells["maKH"].Value.ToString();
                     cbbNhanVien.Text = dgvHD.Rows[e.RowIndex].Cells["maNV"].Value.ToString();
@@ -268,8 +275,11 @@ namespace XML_QuanLyBanMayAnh.UI
                     string maNV = dgvHD.Rows[e.RowIndex].Cells["maNV"].Value.ToString();
                     txttennhanvien.Text = LayTenNhanVien(maNV);
 
+                    // Xóa sạch thông tin chi tiết hóa đơn
+                    ClearThongTinChiTietHoaDon();
+
                     // Load dữ liệu ChiTietHoaDon
-                    LoadChiTietHoaDon(maHD);
+                    LoadChiTietHoaDon(OldMaHD);
                 }
                 catch (Exception ex)
                 {
@@ -277,6 +287,18 @@ namespace XML_QuanLyBanMayAnh.UI
                 }
             }
         }
+
+        private void ClearThongTinChiTietHoaDon()
+        {
+            cbbMaSP.SelectedIndex = -1;
+            txtTenSP.Clear();
+            txtHang.Clear();
+            txtDonGia.Clear();
+            txtSoluongDat.Clear();
+            txtThanhTien.Clear();
+        }
+
+
         private void LoadChiTietHoaDon(string maHD)
         {
             try
@@ -362,14 +384,17 @@ namespace XML_QuanLyBanMayAnh.UI
             {
                 try
                 {
-                    string maSP = DataCTHD.Rows[e.RowIndex].Cells["maSP"].Value.ToString();
+                    // Lưu mã hóa đơn và mã sản phẩm cũ
+                    OldMaHD = txtMaDH.Text; // Lưu mã hóa đơn
+                    OldMaSP = DataCTHD.Rows[e.RowIndex].Cells["maSP"].Value.ToString(); // Lưu mã sản phẩm
+
+                    // Hiển thị thông tin lên các trường nhập liệu
+                    cbbMaSP.Text = OldMaSP;
                     txtSoluongDat.Text = DataCTHD.Rows[e.RowIndex].Cells["soLuongDat"].Value.ToString();
-                    cbbMaSP.Text = maSP;
 
-
-                    // Truy xuất thông tin từ bảng SanPham
-                    LoadSanPhamInfo(maSP);
-                    TinhThanhTien(); // Gọi hàm tính thành tiền
+                    // Load thông tin sản phẩm
+                    LoadSanPhamInfo(OldMaSP);
+                    TinhThanhTien();
                 }
                 catch (Exception ex)
                 {
@@ -449,6 +474,9 @@ namespace XML_QuanLyBanMayAnh.UI
             txtTenSP.Clear();
             txtHang.Clear();
 
+            // Reset mã hóa đơn cũ
+            OldMaHD = string.Empty;
+
             // Xóa DataGridView for Chi Tiết Hóa Đơn
             DataCTHD.DataSource = null;
             DataCTHD.Rows.Clear();
@@ -480,7 +508,7 @@ namespace XML_QuanLyBanMayAnh.UI
                 using (SqlConnection connection = new SqlConnection(strCon))
                 {
                     connection.Open();
-                    // Kiểm tra mã sản phẩm đã tồn tại hay chưa
+                    // Kiểm tra mã hóa đơn đã tồn tại hay chưa
                     string checkSql = "SELECT COUNT(*) FROM HoaDonBan WHERE maHD = @maHD";
                     SqlCommand checkCmd = new SqlCommand(checkSql, connection);
                     checkCmd.Parameters.AddWithValue("@maHD", txtMaDH.Text);
@@ -488,7 +516,7 @@ namespace XML_QuanLyBanMayAnh.UI
                     int count = (int)checkCmd.ExecuteScalar(); // Trả về số lượng bản ghi
                     if (count > 0)
                     {
-                        MessageBox.Show($"Sản phẩm có mã '{txtMaDH.Text}' đã tồn tại. Vui lòng kiểm tra và thêm lại!",
+                        MessageBox.Show($"Hóa đơn có mã '{txtMaDH.Text}' đã tồn tại. Vui lòng kiểm tra và thêm lại!",
                                         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
@@ -508,7 +536,7 @@ namespace XML_QuanLyBanMayAnh.UI
 
                 // Load lại dữ liệu lên DataGridView
                 LoadData();
-                MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Thêm hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 // Ghi lại dữ liệu vào XML từ SQL Server
                 string sqlSelect = "SELECT * FROM HoaDonBan";
                 taoXML.TaoXML(sqlSelect, "HoaDonBan", fileXML);
@@ -524,6 +552,380 @@ namespace XML_QuanLyBanMayAnh.UI
             catch (Exception ex)
             {
                 MessageBox.Show("Lỗi khi thêm dữ liệu: " + ex.Message);
+            }
+        }
+
+        private void btnSuaHD_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nếu OldMaHD không có giá trị
+            if (string.IsNullOrEmpty(OldMaHD))
+            {
+                MessageBox.Show("Vui lòng chọn một hóa đơn từ danh sách trước khi sửa! Hoặc nhấn nút Lưu để tạo mới.",
+                                "Chưa chọn đối tượng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Thoát khỏi sự kiện
+            }
+
+            // Kiểm tra dữ liệu nhập vào
+            if (string.IsNullOrWhiteSpace(txtMaDH.Text) ||
+                string.IsNullOrWhiteSpace(cbbKhachhang.Text) ||
+                string.IsNullOrWhiteSpace(cbbNhanVien.Text))
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            DialogResult result = MessageBox.Show(
+                $"Bạn có chắc chắn muốn sửa hóa đơn '{OldMaHD}' thành '{txtMaDH.Text}' không?",
+                "Xác nhận sửa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(strCon))
+                    {
+                        connection.Open();
+
+                        // Câu lệnh UPDATE để sửa maHD và các thông tin khác
+                        string sql = @"UPDATE HoaDonBan 
+                               SET maHD = @newMaHD, maKH = @maKH, maNV = @maNV, ngayLapDon = @ngayLapDon 
+                               WHERE maHD = @oldMaHD";
+
+                        SqlCommand cmd = new SqlCommand(sql, connection);
+
+                        // Tham số truyền vào câu lệnh SQL
+                        cmd.Parameters.AddWithValue("@newMaHD", txtMaDH.Text); // Mã hóa đơn mới
+                        cmd.Parameters.AddWithValue("@oldMaHD", OldMaHD); // Mã hóa đơn cũ
+                        cmd.Parameters.AddWithValue("@maKH", cbbKhachhang.SelectedValue);
+                        cmd.Parameters.AddWithValue("@maNV", cbbNhanVien.SelectedValue);
+                        cmd.Parameters.AddWithValue("@ngayLapDon", dtpngaydathang.Value);
+
+                        // Thực thi lệnh UPDATE
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // Cập nhật file XML từ SQL Server
+                    string sqlSelect = "SELECT * FROM HoaDonBan";
+                    taoXML.TaoXML(sqlSelect, "HoaDonBan", fileXML);
+
+                    // Load lại dữ liệu
+                    LoadData();
+                    MessageBox.Show("Sửa hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Xóa dữ liệu trên các ô nhập liệu
+                    txtMaDH.Clear();
+                    txttenKH.Clear();
+                    txttennhanvien.Clear();
+                    dtpngaydathang.Value = DateTime.Now;
+                    cbbKhachhang.SelectedIndex = -1;
+                    cbbNhanVien.SelectedIndex = -1;
+
+                    // Reset mã hóa đơn cũ
+                    OldMaHD = string.Empty;
+
+                    // Xóa DataGridView for Chi Tiết Hóa Đơn
+                    DataCTHD.DataSource = null;
+                    DataCTHD.Rows.Clear();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi sửa hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnXoaHD_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra xem các ô nhập liệu có rỗng không
+            if (string.IsNullOrWhiteSpace(txtMaDH.Text) ||
+                string.IsNullOrWhiteSpace(cbbKhachhang.Text) ||
+                string.IsNullOrWhiteSpace(cbbNhanVien.Text))
+            {
+                MessageBox.Show("Hãy chọn một hóa đơn để xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Lấy mã hóa đơn từ TextBox
+            string maHD = txtMaDH.Text;
+
+            // Hiển thị hộp thoại xác nhận xóa
+            DialogResult result = MessageBox.Show(
+                $"Bạn có chắc chắn muốn xóa hóa đơn có mã: {maHD} không?",
+                "Xác nhận xóa",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            // Nếu người dùng chọn Yes
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    // Kết nối tới SQL Server và thực hiện xóa
+                    using (SqlConnection connection = new SqlConnection(strCon))
+                    {
+                        connection.Open();
+                        string sql = "DELETE FROM HoaDonBan WHERE maHD = @maHD";
+                        SqlCommand cmd = new SqlCommand(sql, connection);
+                        cmd.Parameters.AddWithValue("@maHD", maHD);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show($"Xóa hóa đơn có mã {maHD} thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Cập nhật lại DataGridView
+                            LoadData();
+
+                            // Ghi lại dữ liệu vào XML từ SQL Server
+                            string sqlSelect = "SELECT * FROM HoaDonBan";
+                            taoXML.TaoXML(sqlSelect, "HoaDonBan", fileXML);
+                            //MessageBox.Show("Dữ liệu XML đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            // Xóa dữ liệu nhập
+                            txtMaDH.Clear();
+                            txttenKH.Clear();
+                            txttennhanvien.Clear();
+                            dtpngaydathang.Value = DateTime.Now;
+                            cbbKhachhang.SelectedIndex = -1;
+                            cbbNhanVien.SelectedIndex = -1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không tìm thấy hóa đơn để xóa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi xóa dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            //else
+            //{
+            //    MessageBox.Show("Hủy xóa sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //}
+        }
+
+        private void btnLuuHDCT_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nếu chưa chọn đơn hàng (mã hóa đơn trống)
+            if (string.IsNullOrWhiteSpace(txtMaDH.Text))
+            {
+                MessageBox.Show("Hãy chọn một đơn hàng để thêm chi tiết hóa đơn!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra dữ liệu nhập vào cho chi tiết hóa đơn
+            if (string.IsNullOrWhiteSpace(cbbMaSP.Text) || // Kiểm tra mã sản phẩm
+                string.IsNullOrWhiteSpace(txtSoluongDat.Text)) // Kiểm tra số lượng đặt
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin chi tiết hóa đơn!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Thêm dữ liệu vào SQL Server
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+
+                    // Kiểm tra maHD có tồn tại trong bảng HoaDonBan không
+                    string checkMaHD = "SELECT COUNT(*) FROM HoaDonBan WHERE maHD = @maHD";
+                    SqlCommand cmdCheckMaHD = new SqlCommand(checkMaHD, connection);
+                    cmdCheckMaHD.Parameters.AddWithValue("@maHD", txtMaDH.Text);
+
+                    int maHDCount = (int)cmdCheckMaHD.ExecuteScalar();
+                    if (maHDCount == 0)
+                    {
+                        MessageBox.Show($"Mã hóa đơn '{txtMaDH.Text}' không tồn tại trong bảng Hóa Đơn! " +
+                                        "Vui lòng kiểm tra lại hoặc thêm mới hóa đơn trước.",
+                                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Kiểm tra mã hóa đơn và mã sản phẩm đã tồn tại hay chưa trong bảng ChiTieHoaDon
+                    string checkSql = "SELECT COUNT(*) FROM ChiTieHoaDon WHERE maHD = @maHD AND maSP = @maSP";
+                    SqlCommand checkCmd = new SqlCommand(checkSql, connection);
+                    checkCmd.Parameters.AddWithValue("@maHD", txtMaDH.Text);
+                    checkCmd.Parameters.AddWithValue("@maSP", cbbMaSP.SelectedValue);
+
+                    int count = (int)checkCmd.ExecuteScalar(); // Trả về số lượng bản ghi
+                    if (count > 0)
+                    {
+                        MessageBox.Show($"Chi tiết hóa đơn với mã hóa đơn '{txtMaDH.Text}' và sản phẩm '{cbbMaSP.Text}' đã tồn tại! Vui lòng chọn sửa.",
+                                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Nếu không trùng thì thêm dữ liệu mới vào bảng ChiTieHoaDon
+                    string sql = "INSERT INTO ChiTieHoaDon (maHD, maSP, soLuongDat) " +
+                                 "VALUES (@maHD, @maSP, @soLuongDat)";
+                    SqlCommand cmd = new SqlCommand(sql, connection);
+
+                    cmd.Parameters.AddWithValue("@maHD", txtMaDH.Text);
+                    cmd.Parameters.AddWithValue("@maSP", cbbMaSP.SelectedValue);
+                    cmd.Parameters.AddWithValue("@soLuongDat", txtSoluongDat.Text);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Load lại dữ liệu ChiTietHoaDon vào DataGridView
+                LoadChiTietHoaDon(txtMaDH.Text);
+                MessageBox.Show("Thêm chi tiết hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                ClearThongTinChiTietHoaDon();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm chi tiết hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnSuaHDCT_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nếu chưa chọn chi tiết hóa đơn cần sửa
+            if (string.IsNullOrWhiteSpace(txtMaDH.Text) || string.IsNullOrWhiteSpace(cbbMaSP.Text))
+            {
+                MessageBox.Show("Hãy chọn một chi tiết hóa đơn để sửa!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Kiểm tra dữ liệu nhập
+            if (string.IsNullOrWhiteSpace(txtSoluongDat.Text))
+            {
+                MessageBox.Show("Vui lòng nhập số lượng đặt!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Thêm thông báo xác nhận trước khi sửa
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn sửa chi tiết hóa đơn này không?",
+                                                 "Xác nhận sửa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                //MessageBox.Show("Hủy sửa chi tiết hóa đơn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return; // Thoát khỏi sự kiện nếu người dùng chọn "No"
+            }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+
+                    // Nếu trùng lặp thì thực hiện UPDATE thay vì thông báo lỗi
+                    string updateSql = @"UPDATE ChiTieHoaDon 
+                                 SET soLuongDat = @soLuongDat 
+                                 WHERE maHD = @newMaHD AND maSP = @newMaSP";
+
+                    SqlCommand updateCmd = new SqlCommand(updateSql, connection);
+                    updateCmd.Parameters.AddWithValue("@newMaHD", txtMaDH.Text);
+                    updateCmd.Parameters.AddWithValue("@newMaSP", cbbMaSP.SelectedValue);
+                    updateCmd.Parameters.AddWithValue("@soLuongDat", txtSoluongDat.Text);
+
+                    int rowsAffected = updateCmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Cập nhật chi tiết hóa đơn thành công!",
+                                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        // Nếu không có dữ liệu cần UPDATE, thêm mới vào
+                        string insertSql = @"INSERT INTO ChiTieHoaDon (maHD, maSP, soLuongDat) 
+                                     VALUES (@newMaHD, @newMaSP, @soLuongDat)";
+
+                        SqlCommand insertCmd = new SqlCommand(insertSql, connection);
+                        insertCmd.Parameters.AddWithValue("@newMaHD", txtMaDH.Text);
+                        insertCmd.Parameters.AddWithValue("@newMaSP", cbbMaSP.SelectedValue);
+                        insertCmd.Parameters.AddWithValue("@soLuongDat", txtSoluongDat.Text);
+
+                        insertCmd.ExecuteNonQuery();
+
+                        MessageBox.Show("Thêm chi tiết hóa đơn thành công!",
+                                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                    // Load lại dữ liệu chi tiết hóa đơn
+                    LoadChiTietHoaDon(txtMaDH.Text);
+                    // Cập nhật lại mã hóa đơn và mã sản phẩm cũ
+                    OldMaHD = txtMaDH.Text;
+                    OldMaSP = cbbMaSP.SelectedValue.ToString();
+
+                    // Xóa dữ liệu nhập
+                    ClearThongTinChiTietHoaDon();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi sửa chi tiết hóa đơn: " + ex.Message,
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnXoaHDCT_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nếu chưa chọn chi tiết hóa đơn để xóa
+            if (string.IsNullOrWhiteSpace(txtMaDH.Text) || string.IsNullOrWhiteSpace(cbbMaSP.Text))
+            {
+                MessageBox.Show("Hãy chọn một chi tiết hóa đơn để xóa!",
+                                "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Thông báo xác nhận xóa
+            DialogResult result = MessageBox.Show(
+                $"Bạn có chắc chắn muốn xóa chi tiết hóa đơn có mã hóa đơn '{txtMaDH.Text}' và sản phẩm '{cbbMaSP.Text}' không?",
+                "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.No)
+            {
+                MessageBox.Show("Hủy xóa chi tiết hóa đơn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return; // Thoát khỏi sự kiện nếu chọn No
+            }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+
+                    // Câu lệnh DELETE để xóa chi tiết hóa đơn
+                    string deleteSql = @"DELETE FROM ChiTieHoaDon 
+                                 WHERE maHD = @maHD AND maSP = @maSP";
+
+                    SqlCommand deleteCmd = new SqlCommand(deleteSql, connection);
+                    deleteCmd.Parameters.AddWithValue("@maHD", txtMaDH.Text);
+                    deleteCmd.Parameters.AddWithValue("@maSP", cbbMaSP.SelectedValue);
+
+                    int rowsAffected = deleteCmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Xóa chi tiết hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Làm mới dữ liệu chi tiết hóa đơn
+                        LoadChiTietHoaDon(txtMaDH.Text);
+
+                        // Xóa dữ liệu nhập trong các ô TextBox và ComboBox
+                        ClearThongTinChiTietHoaDon();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tìm thấy chi tiết hóa đơn để xóa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xóa chi tiết hóa đơn: " + ex.Message,
+                                "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

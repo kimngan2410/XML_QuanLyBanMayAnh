@@ -59,16 +59,16 @@
             this.Label1 = new System.Windows.Forms.Label();
             this.btnSuaHD = new System.Windows.Forms.Button();
             this.txtTenNV = new System.Windows.Forms.Panel();
+            this.btnLuuHDCT = new System.Windows.Forms.Button();
+            this.btnXoaHDCT = new System.Windows.Forms.Button();
+            this.btnSuaHDCT = new System.Windows.Forms.Button();
+            this.btnThemHDCT = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.DataCTHD = new System.Windows.Forms.DataGridView();
             this.btnThemHD = new System.Windows.Forms.Button();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.Label9 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnLuuHDCT = new System.Windows.Forms.Button();
-            this.btnXoaHDCT = new System.Windows.Forms.Button();
-            this.btnSuaHDCT = new System.Windows.Forms.Button();
-            this.btnThemHDCT = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHD)).BeginInit();
             this.GroupBox3.SuspendLayout();
             this.txtTenNV.SuspendLayout();
@@ -162,6 +162,7 @@
             this.btnXoaHD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnXoaHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnXoaHD.UseVisualStyleBackColor = true;
+            this.btnXoaHD.Click += new System.EventHandler(this.btnXoaHD_Click);
             // 
             // Label3
             // 
@@ -409,6 +410,7 @@
             this.btnSuaHD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSuaHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSuaHD.UseVisualStyleBackColor = true;
+            this.btnSuaHD.Click += new System.EventHandler(this.btnSuaHD_Click);
             // 
             // txtTenNV
             // 
@@ -431,6 +433,66 @@
             this.txtTenNV.Name = "txtTenNV";
             this.txtTenNV.Size = new System.Drawing.Size(903, 805);
             this.txtTenNV.TabIndex = 1;
+            // 
+            // btnLuuHDCT
+            // 
+            this.btnLuuHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuuHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.luu_icon;
+            this.btnLuuHDCT.Location = new System.Drawing.Point(543, 720);
+            this.btnLuuHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLuuHDCT.Name = "btnLuuHDCT";
+            this.btnLuuHDCT.Size = new System.Drawing.Size(94, 33);
+            this.btnLuuHDCT.TabIndex = 32;
+            this.btnLuuHDCT.Text = " Lưu";
+            this.btnLuuHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLuuHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLuuHDCT.UseVisualStyleBackColor = true;
+            this.btnLuuHDCT.Click += new System.EventHandler(this.btnLuuHDCT_Click);
+            // 
+            // btnXoaHDCT
+            // 
+            this.btnXoaHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoaHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.delete_icon;
+            this.btnXoaHDCT.Location = new System.Drawing.Point(763, 720);
+            this.btnXoaHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnXoaHDCT.Name = "btnXoaHDCT";
+            this.btnXoaHDCT.Size = new System.Drawing.Size(94, 33);
+            this.btnXoaHDCT.TabIndex = 31;
+            this.btnXoaHDCT.Text = " Xoá";
+            this.btnXoaHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnXoaHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnXoaHDCT.UseVisualStyleBackColor = true;
+            this.btnXoaHDCT.Click += new System.EventHandler(this.btnXoaHDCT_Click);
+            // 
+            // btnSuaHDCT
+            // 
+            this.btnSuaHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSuaHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.edit_icon1;
+            this.btnSuaHDCT.Location = new System.Drawing.Point(654, 720);
+            this.btnSuaHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSuaHDCT.Name = "btnSuaHDCT";
+            this.btnSuaHDCT.Size = new System.Drawing.Size(94, 33);
+            this.btnSuaHDCT.TabIndex = 30;
+            this.btnSuaHDCT.Text = " Sửa";
+            this.btnSuaHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSuaHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSuaHDCT.UseVisualStyleBackColor = true;
+            this.btnSuaHDCT.Click += new System.EventHandler(this.btnSuaHDCT_Click);
+            // 
+            // btnThemHDCT
+            // 
+            this.btnThemHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThemHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.add_icon;
+            this.btnThemHDCT.Location = new System.Drawing.Point(431, 720);
+            this.btnThemHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnThemHDCT.Name = "btnThemHDCT";
+            this.btnThemHDCT.Size = new System.Drawing.Size(95, 33);
+            this.btnThemHDCT.TabIndex = 29;
+            this.btnThemHDCT.Text = " Thêm";
+            this.btnThemHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnThemHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnThemHDCT.UseVisualStyleBackColor = true;
+            this.btnThemHDCT.Click += new System.EventHandler(this.btnThemHDCT_Click);
             // 
             // groupBox4
             // 
@@ -520,63 +582,6 @@
             this.GroupBox1.TabIndex = 0;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "THÔNG TIN HOÁ ĐƠN";
-            // 
-            // btnLuuHDCT
-            // 
-            this.btnLuuHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLuuHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.luu_icon;
-            this.btnLuuHDCT.Location = new System.Drawing.Point(543, 720);
-            this.btnLuuHDCT.Margin = new System.Windows.Forms.Padding(2);
-            this.btnLuuHDCT.Name = "btnLuuHDCT";
-            this.btnLuuHDCT.Size = new System.Drawing.Size(94, 33);
-            this.btnLuuHDCT.TabIndex = 32;
-            this.btnLuuHDCT.Text = " Lưu";
-            this.btnLuuHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnLuuHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnLuuHDCT.UseVisualStyleBackColor = true;
-            // 
-            // btnXoaHDCT
-            // 
-            this.btnXoaHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXoaHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.delete_icon;
-            this.btnXoaHDCT.Location = new System.Drawing.Point(763, 720);
-            this.btnXoaHDCT.Margin = new System.Windows.Forms.Padding(2);
-            this.btnXoaHDCT.Name = "btnXoaHDCT";
-            this.btnXoaHDCT.Size = new System.Drawing.Size(94, 33);
-            this.btnXoaHDCT.TabIndex = 31;
-            this.btnXoaHDCT.Text = " Xoá";
-            this.btnXoaHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnXoaHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnXoaHDCT.UseVisualStyleBackColor = true;
-            // 
-            // btnSuaHDCT
-            // 
-            this.btnSuaHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSuaHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.edit_icon1;
-            this.btnSuaHDCT.Location = new System.Drawing.Point(654, 720);
-            this.btnSuaHDCT.Margin = new System.Windows.Forms.Padding(2);
-            this.btnSuaHDCT.Name = "btnSuaHDCT";
-            this.btnSuaHDCT.Size = new System.Drawing.Size(94, 33);
-            this.btnSuaHDCT.TabIndex = 30;
-            this.btnSuaHDCT.Text = " Sửa";
-            this.btnSuaHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSuaHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSuaHDCT.UseVisualStyleBackColor = true;
-            // 
-            // btnThemHDCT
-            // 
-            this.btnThemHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThemHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.add_icon;
-            this.btnThemHDCT.Location = new System.Drawing.Point(431, 720);
-            this.btnThemHDCT.Margin = new System.Windows.Forms.Padding(2);
-            this.btnThemHDCT.Name = "btnThemHDCT";
-            this.btnThemHDCT.Size = new System.Drawing.Size(95, 33);
-            this.btnThemHDCT.TabIndex = 29;
-            this.btnThemHDCT.Text = " Thêm";
-            this.btnThemHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnThemHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnThemHDCT.UseVisualStyleBackColor = true;
-            this.btnThemHDCT.Click += new System.EventHandler(this.btnThemHDCT_Click);
             // 
             // HoaDonBanHan
             // 

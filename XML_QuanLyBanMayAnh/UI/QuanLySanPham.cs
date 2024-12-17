@@ -17,6 +17,8 @@ namespace XML_QuanLyBanMayAnh.UI
         private string strCon = "Data Source=localhost;Initial Catalog=QuanLyBanMayAnh2;Integrated Security=True";
         private string fileXML = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "SanPham.xml");
         private taoXML taoXML = new taoXML();
+        // Biến lưu mã hóa đơn cũ khi click vào DataGridView
+        private string OldMaSP;
         public QuanLySanPham()
         {
             InitializeComponent();
@@ -80,8 +82,10 @@ namespace XML_QuanLyBanMayAnh.UI
                     // Lấy maHang từ dòng được chọn
                     string selectedMaHang = dgvSP.Rows[e.RowIndex].Cells["maHang"].Value.ToString();
 
+                   OldMaSP= dgvSP.Rows[e.RowIndex].Cells["maSP"].Value.ToString();
+
                     // Hiển thị dữ liệu khác vào các TextBox
-                    txtMaSp.Text = dgvSP.Rows[e.RowIndex].Cells["maSP"].Value.ToString();
+                    txtMaSp.Text = OldMaSP;
                     txttensp.Text = dgvSP.Rows[e.RowIndex].Cells["tenSP"].Value.ToString();
                     txtDongia.Text = dgvSP.Rows[e.RowIndex].Cells["donGia"].Value.ToString();
                     txtSoluongcon.Text = dgvSP.Rows[e.RowIndex].Cells["soLuongHienCon"].Value.ToString();
@@ -130,6 +134,9 @@ namespace XML_QuanLyBanMayAnh.UI
             txtDongia.Clear();
             txtSoluongcon.Clear();
             txtMota.Clear();
+
+            // Reset mã hóa đơn cũ
+            OldMaSP = string.Empty;
         }
         private void LoadLoaiHang()
         {
@@ -159,6 +166,13 @@ namespace XML_QuanLyBanMayAnh.UI
         //nút sửa
         private void btnSua_Click(object sender, EventArgs e)
         {
+            // Kiểm tra nếu OldMaHD không có giá trị
+            if (string.IsNullOrEmpty(OldMaSP))
+            {
+                MessageBox.Show("Vui lòng chọn một hóa đơn từ danh sách trước khi sửa! Hoặc nhấn nút Lưu để tạo mới.",
+                                "Chưa chọn đối tượng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return; // Thoát khỏi sự kiện
+            }
             // Kiểm tra xem có sản phẩm nào được chọn chưa
             if (string.IsNullOrWhiteSpace(txtMaSp.Text) ||
                 string.IsNullOrWhiteSpace(txttensp.Text) ||
@@ -186,7 +200,7 @@ namespace XML_QuanLyBanMayAnh.UI
 
             // Hiển thị hộp thoại xác nhận sửa
             DialogResult result = MessageBox.Show(
-                $"Bạn có chắc chắn muốn sửa sản phẩm có mã: {txtMaSp.Text} không?",
+                $"Bạn có chắc chắn muốn sửa mã hóa đơn '{OldMaSP}' thành '{txtMaSp.Text}' không?",
                 "Xác nhận sửa",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question
@@ -200,11 +214,13 @@ namespace XML_QuanLyBanMayAnh.UI
                     using (SqlConnection connection = new SqlConnection(strCon))
                     {
                         connection.Open();
-                        string sql = "UPDATE SanPham SET tenSP = @tenSP, maHang = @maHang, donGia = @donGia, " +
-                                     "soLuongHienCon = @soLuongHienCon, moTa = @moTa WHERE maSP = @maSP";
+                        string sql = "UPDATE SanPham " +
+                                    "SET maSP= @newMaSP, tenSP = @tenSP, maHang = @maHang, donGia = @donGia, " +
+                                     "soLuongHienCon = @soLuongHienCon, moTa = @moTa WHERE maSP = @oldMaSP";
                         SqlCommand cmd = new SqlCommand(sql, connection);
 
-                        cmd.Parameters.AddWithValue("@maSP", txtMaSp.Text);
+                        cmd.Parameters.AddWithValue("@newMaSP", txtMaSp.Text);
+                        cmd.Parameters.AddWithValue("@oldMaSP", OldMaSP); // Mã Sản Phẩm cũ
                         cmd.Parameters.AddWithValue("@tenSP", txttensp.Text);
                         cmd.Parameters.AddWithValue("@maHang", cbbLoaiHang.SelectedValue);
                         cmd.Parameters.AddWithValue("@donGia", donGia);
@@ -229,6 +245,9 @@ namespace XML_QuanLyBanMayAnh.UI
                     txtDongia.Clear();
                     txtSoluongcon.Clear();
                     txtMota.Clear();
+
+                    // Reset mã hóa đơn cũ
+                    OldMaSP = string.Empty;
                 }
                 catch (Exception ex)
                 {
@@ -402,6 +421,7 @@ namespace XML_QuanLyBanMayAnh.UI
             //    MessageBox.Show("Hủy xóa sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             //}
         }
+
         private void txtTimKiem_Enter(object sender, EventArgs e)
         {
             if (txtTimKiem.Text == "Tìm kiếm theo mã sản phẩm")
