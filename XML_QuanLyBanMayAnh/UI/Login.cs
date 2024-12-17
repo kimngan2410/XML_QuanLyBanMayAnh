@@ -83,5 +83,20 @@ namespace XML_QuanLyBanMayAnh.UI
         {
 
         }
+
+        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            // Kiểm tra checkbox có được chọn không
+            if (chkShowPassword.Checked)
+            {
+                // Hiển thị mật khẩu (chuyển sang kiểu bình thường)
+                txtPass.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                // Ẩn mật khẩu (chuyển về dấu chấm)
+                txtPass.UseSystemPasswordChar = true;
+            }
+        }
     }
 }

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace XML_QuanLyBanMayAnh.UI
 {
@@ -927,6 +929,42 @@ namespace XML_QuanLyBanMayAnh.UI
                 MessageBox.Show("Lỗi khi xóa chi tiết hóa đơn: " + ex.Message,
                                 "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        XDocument xItem;
+        private void inHoaDon()
+        {
+
+            string pathHTML = "ChiTietHoaDon.html";
+            xItem = XDocument.Load("./ChiTietHoaDon.xml");
+            var xI = xItem.Descendants("_x0027_ChiTietHoaDon_x0027_");
+
+            var html = new XElement("html", // Tạo cây HTML trong bộ nhớ
+            new XElement("head",
+            new XElement("style", "table{border:solid 1px red;border - collapse: collapse}", "td{border:solid 1px silver;}")),
+            new XElement("body",
+            new XElement("h2", "Chi Tiết Hoá Đơn"),
+            new XElement("table",
+                new XElement("tr",
+                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Mã Hoá Đơn"),
+                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Mã Sản Phẩm"),
+                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Số Lượng Đặt"),
+                    new XElement("td", new XAttribute("style", "background-color:lightgreen"), "Đơn Giá")),
+            from el in xI
+            select new XElement("tr",
+                        new XElement("td", el.Element("maDH").Value),
+                        new XElement("td", el.Element("maSP").Value),
+                        new XElement("td", el.Element("soLuongDat").Value),
+                        new XElement("td",
+                            new XAttribute("style", "text-align:right"),
+                            el.Element("donGia").Value)))));
+            html.Save(pathHTML);
+            Process.Start(pathHTML);
+
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            inHoaDon();
         }
     }
 }

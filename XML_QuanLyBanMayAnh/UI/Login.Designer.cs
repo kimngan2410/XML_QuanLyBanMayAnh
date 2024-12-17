@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Label1 = new System.Windows.Forms.Label();
-            this.CheckBox1 = new System.Windows.Forms.CheckBox();
+            this.chkShowPassword = new System.Windows.Forms.CheckBox();
             this.txtPass = new System.Windows.Forms.TextBox();
             this.txtTendangnhap = new System.Windows.Forms.TextBox();
             this.Button2 = new System.Windows.Forms.Button();
@@ -51,17 +51,18 @@
             this.Label1.Text = "ĐĂNG NHẬP";
             this.Label1.Click += new System.EventHandler(this.Label1_Click);
             // 
-            // CheckBox1
+            // chkShowPassword
             // 
-            this.CheckBox1.AutoSize = true;
-            this.CheckBox1.BackColor = System.Drawing.Color.White;
-            this.CheckBox1.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CheckBox1.Location = new System.Drawing.Point(247, 358);
-            this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(163, 25);
-            this.CheckBox1.TabIndex = 20;
-            this.CheckBox1.Text = "Hiển thị mật khẩu";
-            this.CheckBox1.UseVisualStyleBackColor = false;
+            this.chkShowPassword.AutoSize = true;
+            this.chkShowPassword.BackColor = System.Drawing.Color.White;
+            this.chkShowPassword.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkShowPassword.Location = new System.Drawing.Point(247, 358);
+            this.chkShowPassword.Name = "chkShowPassword";
+            this.chkShowPassword.Size = new System.Drawing.Size(163, 25);
+            this.chkShowPassword.TabIndex = 20;
+            this.chkShowPassword.Text = "Hiển thị mật khẩu";
+            this.chkShowPassword.UseVisualStyleBackColor = false;
+            this.chkShowPassword.CheckedChanged += new System.EventHandler(this.CheckBox1_CheckedChanged);
             // 
             // txtPass
             // 
@@ -130,7 +131,7 @@
             this.ClientSize = new System.Drawing.Size(884, 500);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.Label1);
-            this.Controls.Add(this.CheckBox1);
+            this.Controls.Add(this.chkShowPassword);
             this.Controls.Add(this.txtPass);
             this.Controls.Add(this.txtTendangnhap);
             this.Controls.Add(this.Button2);
@@ -148,7 +149,7 @@
         #endregion
 
         internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.CheckBox CheckBox1;
+        internal System.Windows.Forms.CheckBox chkShowPassword;
         internal System.Windows.Forms.TextBox txtPass;
         internal System.Windows.Forms.TextBox txtTendangnhap;
         internal System.Windows.Forms.Button Button2;
