@@ -780,6 +780,27 @@ namespace XML_QuanLyBanMayAnh.UI
                     cmd.ExecuteNonQuery();
                 }
 
+                // Ghi vào file XML
+                string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
+                XDocument xDoc;
+
+                if (!File.Exists(xmlPath))
+                {
+                    xDoc = new XDocument(new XElement("Root"));
+                }
+                else
+                {
+                    xDoc = XDocument.Load(xmlPath);
+                }
+
+                xDoc.Root.Add(new XElement("ChiTietHoaDon",
+                    new XElement("maHD", txtMaDH.Text),
+                    new XElement("maSP", cbbMaSP.SelectedValue),
+                    new XElement("soLuongDat", txtSoluongDat.Text)
+                ));
+
+                xDoc.Save(xmlPath);
+
                 // Load lại dữ liệu ChiTietHoaDon vào DataGridView
                 LoadChiTietHoaDon(txtMaDH.Text);
                 MessageBox.Show("Thêm chi tiết hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -859,6 +880,10 @@ namespace XML_QuanLyBanMayAnh.UI
                                         "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
 
+                    string sqlChiTietHD = "SELECT * FROM ChiTieHoaDon";
+                    string fileXMLChiTietHD = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
+                    taoXML.TaoXML(sqlChiTietHD, "ChiTietHoaDon", fileXMLChiTietHD);
+
                     // Load lại dữ liệu chi tiết hóa đơn
                     LoadChiTietHoaDon(txtMaDH.Text);
                     // Cập nhật lại mã hóa đơn và mã sản phẩm cũ
@@ -875,6 +900,24 @@ namespace XML_QuanLyBanMayAnh.UI
                                 "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void UpdateXMLFile(string maHD, string maSP, string soLuongDat)
+        {
+            string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
+
+            if (File.Exists(xmlPath))
+            {
+                XDocument xDoc = XDocument.Load(xmlPath);
+                var chiTiet = xDoc.Descendants("ChiTietHoaDon")
+                                  .FirstOrDefault(x => x.Element("maHD")?.Value == maHD &&
+                                                       x.Element("maSP")?.Value == maSP);
+                if (chiTiet != null)
+                {
+                    chiTiet.Element("soLuongDat").Value = soLuongDat;
+                    xDoc.Save(xmlPath);
+                }
+            }
+        }
+
 
         private void btnXoaHDCT_Click(object sender, EventArgs e)
         {
@@ -915,6 +958,12 @@ namespace XML_QuanLyBanMayAnh.UI
 
                     if (rowsAffected > 0)
                     {
+                        // Xóa dòng tương ứng trong file XML
+                        string sqlChiTietHD = "SELECT * FROM ChiTieHoaDon";
+                        string fileXMLChiTietHD = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
+                        taoXML.TaoXML(sqlChiTietHD, "ChiTietHoaDon", fileXMLChiTietHD);
+
+
                         MessageBox.Show("Xóa chi tiết hóa đơn thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         // Làm mới dữ liệu chi tiết hóa đơn
@@ -935,6 +984,25 @@ namespace XML_QuanLyBanMayAnh.UI
                                 "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void DeleteFromXMLFile(string maHD, string maSP)
+        {
+            string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
+
+            if (File.Exists(xmlPath))
+            {
+                XDocument xDoc = XDocument.Load(xmlPath);
+                var chiTiet = xDoc.Descendants("ChiTietHoaDon")
+                                  .FirstOrDefault(x => x.Element("maHD")?.Value == maHD &&
+                                                       x.Element("maSP")?.Value == maSP);
+                if (chiTiet != null)
+                {
+                    chiTiet.Remove(); // Xóa phần tử khỏi XML
+                    xDoc.Save(xmlPath);
+                }
+            }
+        }
+
 
         XDocument xItem;
         private void inHoaDon()
