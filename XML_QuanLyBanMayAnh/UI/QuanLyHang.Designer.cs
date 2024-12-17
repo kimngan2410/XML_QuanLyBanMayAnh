@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.Panel1 = new System.Windows.Forms.Panel();
+            this.Button6 = new System.Windows.Forms.Button();
+            this.Button4 = new System.Windows.Forms.Button();
+            this.Button3 = new System.Windows.Forms.Button();
+            this.Button2 = new System.Windows.Forms.Button();
+            this.Button1 = new System.Windows.Forms.Button();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvHang = new System.Windows.Forms.DataGridView();
             this.Label9 = new System.Windows.Forms.Label();
@@ -39,11 +44,6 @@
             this.txtMahang = new System.Windows.Forms.TextBox();
             this.Label2 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
-            this.Button6 = new System.Windows.Forms.Button();
-            this.Button4 = new System.Windows.Forms.Button();
-            this.Button3 = new System.Windows.Forms.Button();
-            this.Button2 = new System.Windows.Forms.Button();
-            this.Button1 = new System.Windows.Forms.Button();
             this.Panel1.SuspendLayout();
             this.GroupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHang)).BeginInit();
@@ -65,6 +65,76 @@
             this.Panel1.Size = new System.Drawing.Size(1105, 730);
             this.Panel1.TabIndex = 1;
             // 
+            // Button6
+            // 
+            this.Button6.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button6.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.luu_icon;
+            this.Button6.Location = new System.Drawing.Point(214, 659);
+            this.Button6.Name = "Button6";
+            this.Button6.Size = new System.Drawing.Size(136, 41);
+            this.Button6.TabIndex = 9;
+            this.Button6.Text = " Lưu";
+            this.Button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button6.UseVisualStyleBackColor = true;
+            this.Button6.Click += new System.EventHandler(this.Button6_Click);
+            // 
+            // Button4
+            // 
+            this.Button4.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button4.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.exit_icon;
+            this.Button4.Location = new System.Drawing.Point(910, 659);
+            this.Button4.Name = "Button4";
+            this.Button4.Size = new System.Drawing.Size(136, 41);
+            this.Button4.TabIndex = 6;
+            this.Button4.Text = " Thoát";
+            this.Button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button4.UseVisualStyleBackColor = true;
+            this.Button4.Click += new System.EventHandler(this.Button4_Click);
+            // 
+            // Button3
+            // 
+            this.Button3.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button3.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.delete_icon;
+            this.Button3.Location = new System.Drawing.Point(534, 659);
+            this.Button3.Name = "Button3";
+            this.Button3.Size = new System.Drawing.Size(136, 41);
+            this.Button3.TabIndex = 5;
+            this.Button3.Text = " Xoá";
+            this.Button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button3.UseVisualStyleBackColor = true;
+            this.Button3.Click += new System.EventHandler(this.Button3_Click);
+            // 
+            // Button2
+            // 
+            this.Button2.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button2.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.edit_icon;
+            this.Button2.Location = new System.Drawing.Point(375, 659);
+            this.Button2.Name = "Button2";
+            this.Button2.Size = new System.Drawing.Size(136, 41);
+            this.Button2.TabIndex = 4;
+            this.Button2.Text = " Sửa";
+            this.Button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button2.UseVisualStyleBackColor = true;
+            this.Button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // Button1
+            // 
+            this.Button1.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button1.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.add_icon;
+            this.Button1.Location = new System.Drawing.Point(55, 659);
+            this.Button1.Name = "Button1";
+            this.Button1.Size = new System.Drawing.Size(136, 41);
+            this.Button1.TabIndex = 3;
+            this.Button1.Text = " Thêm";
+            this.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.Button1.UseVisualStyleBackColor = true;
+            this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
             // GroupBox2
             // 
             this.GroupBox2.Controls.Add(this.dgvHang);
@@ -85,6 +155,7 @@
             this.dgvHang.RowTemplate.Height = 24;
             this.dgvHang.Size = new System.Drawing.Size(982, 227);
             this.dgvHang.TabIndex = 0;
+            this.dgvHang.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHang_CellClick);
             // 
             // Label9
             // 
@@ -164,71 +235,6 @@
             this.Label1.TabIndex = 0;
             this.Label1.Text = "Mã hãng:";
             // 
-            // Button6
-            // 
-            this.Button6.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button6.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.luu_icon;
-            this.Button6.Location = new System.Drawing.Point(214, 659);
-            this.Button6.Name = "Button6";
-            this.Button6.Size = new System.Drawing.Size(136, 41);
-            this.Button6.TabIndex = 9;
-            this.Button6.Text = " Lưu";
-            this.Button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button6.UseVisualStyleBackColor = true;
-            // 
-            // Button4
-            // 
-            this.Button4.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button4.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.exit_icon;
-            this.Button4.Location = new System.Drawing.Point(910, 659);
-            this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(136, 41);
-            this.Button4.TabIndex = 6;
-            this.Button4.Text = " Thoát";
-            this.Button4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button4.UseVisualStyleBackColor = true;
-            // 
-            // Button3
-            // 
-            this.Button3.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button3.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.delete_icon;
-            this.Button3.Location = new System.Drawing.Point(534, 659);
-            this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(136, 41);
-            this.Button3.TabIndex = 5;
-            this.Button3.Text = " Xoá";
-            this.Button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button3.UseVisualStyleBackColor = true;
-            // 
-            // Button2
-            // 
-            this.Button2.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button2.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.edit_icon;
-            this.Button2.Location = new System.Drawing.Point(375, 659);
-            this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(136, 41);
-            this.Button2.TabIndex = 4;
-            this.Button2.Text = " Sửa";
-            this.Button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button2.UseVisualStyleBackColor = true;
-            // 
-            // Button1
-            // 
-            this.Button1.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button1.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.add_icon;
-            this.Button1.Location = new System.Drawing.Point(55, 659);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(136, 41);
-            this.Button1.TabIndex = 3;
-            this.Button1.Text = " Thêm";
-            this.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button1.UseVisualStyleBackColor = true;
-            // 
             // QuanLyHang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -239,6 +245,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "QuanLyHang";
             this.Text = "QuanLyHang";
+            this.Load += new System.EventHandler(this.QuanLyHang_Load);
             this.Panel1.ResumeLayout(false);
             this.Panel1.PerformLayout();
             this.GroupBox2.ResumeLayout(false);
