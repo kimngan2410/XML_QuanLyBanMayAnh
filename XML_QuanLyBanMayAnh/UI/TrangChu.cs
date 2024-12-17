@@ -61,5 +61,10 @@ namespace XML_QuanLyBanMayAnh.UI
             frm.Show();
             this.Visible = false;
         }
+
+        private void TrangChu_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
