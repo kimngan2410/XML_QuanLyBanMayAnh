@@ -76,7 +76,12 @@ namespace XML_QuanLyBanMayAnh.UI
                 // Tạo file XML cho bảng ChiTietHoaDon
                 string fileXMLChiTietHD = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
                 string sqlChiTietHD = "SELECT * FROM ChiTieHoaDon";
-                taoXML.TaoXML(sqlChiTietHD, "ChiTietHoaDon", fileXMLChiTietHD);
+                // Tạo file XML
+                if (!File.Exists(fileXMLChiTietHD))
+                {
+                    taoXML.TaoXML(sqlChiTietHD, "ChiTietHoaDon", fileXMLChiTietHD);
+                    MessageBox.Show("File ChiTietHoaDon.xml đã được tạo thành công.");
+                }
 
                 LoadData(); // Tải dữ liệu từ cơ sở dữ liệu lên DataGridView
             }
@@ -963,6 +968,104 @@ namespace XML_QuanLyBanMayAnh.UI
 
         }
         private void button1_Click(object sender, EventArgs e)
+        {
+            inHoaDon();
+        }
+
+        XDocument xItem;
+        private void inHoaDon()
+        {
+            if (string.IsNullOrWhiteSpace(OldMaHD))
+            {
+                MessageBox.Show("Vui lòng chọn một hóa đơn trước khi in chi tiết hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
+            string pathHTML = "ChiTietHoaDon.html";
+
+            try
+            {
+                // Kiểm tra file tồn tại
+                if (!File.Exists(xmlPath))
+                {
+                    MessageBox.Show("File ChiTietHoaDon.xml không tồn tại. Vui lòng tạo lại file trước khi in hóa đơn.");
+                    return;
+                }
+
+                // Tải file XML
+                xItem = XDocument.Load(xmlPath);
+                var xI = xItem.Descendants("ChiTietHoaDon")
+                              .Where(el => el.Element("maHD")?.Value == OldMaHD); // Lọc theo mã hóa đơn đang chọn
+
+                if (!xI.Any())
+                {
+                    MessageBox.Show("Không có dữ liệu chi tiết hóa đơn cho hóa đơn này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Lấy đơn giá từ bảng SanPham
+                Dictionary<string, string> donGiaDict = new Dictionary<string, string>();
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+                    string query = "SELECT maSP, donGia FROM SanPham";
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        string maSP = reader["maSP"].ToString();
+                        string donGia = reader["donGia"].ToString();
+                        donGiaDict[maSP] = donGia; // Thêm vào Dictionary
+                    }
+                }
+
+                // Tạo HTML
+                var html = new XElement("html",
+                    new XElement("head",
+                        new XElement("style", @"
+                    table { width: 100%; border: 1px solid black; border-collapse: collapse; }
+                    th, td { border: 1px solid gray; padding: 8px; text-align: center; }
+                    th { background-color: lightgreen; font-weight: bold; }")
+                    ),
+                    new XElement("body",
+                        new XElement("h2", $"Chi Tiết Hóa Đơn - Mã Hóa Đơn: {OldMaHD}"),
+                        new XElement("table",
+                            new XElement("tr",
+                                new XElement("th", "Mã Hóa Đơn"),
+                                new XElement("th", "Mã Sản Phẩm"),
+                                new XElement("th", "Số Lượng Đặt"),
+                                new XElement("th", "Đơn Giá"),
+                                new XElement("th", "Thành Tiền")
+                            ),
+                            from el in xI
+                            let maSP = el.Element("maSP")?.Value
+                            let soLuongDat = int.TryParse(el.Element("soLuongDat")?.Value, out int sl) ? sl : 0
+                            let donGia = donGiaDict.ContainsKey(maSP) ? Convert.ToDecimal(donGiaDict[maSP]) : 0
+                            let thanhTien = donGia * soLuongDat
+                            select new XElement("tr",
+                                new XElement("td", el.Element("maHD")?.Value ?? "N/A"),
+                                new XElement("td", maSP ?? "N/A"),
+                                new XElement("td", soLuongDat.ToString()),
+                                new XElement("td", new XAttribute("style", "text-align:right"), donGia.ToString("N0")),
+                                new XElement("td", new XAttribute("style", "text-align:right"), thanhTien.ToString("N0"))
+                            )
+                        )
+                    )
+                );
+
+                // Lưu file HTML và mở trong trình duyệt
+                html.Save(pathHTML);
+                Process.Start(new ProcessStartInfo(pathHTML) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tạo hóa đơn HTML: " + ex.Message);
+            }
+        }
+
+        private void btnInHD_Click(object sender, EventArgs e)
         {
             inHoaDon();
         }
