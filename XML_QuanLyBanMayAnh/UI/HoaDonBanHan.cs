@@ -64,6 +64,7 @@ namespace XML_QuanLyBanMayAnh.UI
                 EnsureDataFolderExists(); // Tạo thư mục Data nếu chưa tồn tại
                 LoadMaNV();
                 LoadMaKH();
+                LoadMaSP(); // Load sản phẩm
                 string sql = "SELECT * FROM HoaDonBan";
                 taoXML.TaoXML(sql, "HoaDonBan", fileXML); // Gọi lớp tạo XML để tạo file
 
@@ -298,6 +299,63 @@ namespace XML_QuanLyBanMayAnh.UI
             }
         }
 
+        private void LoadMaSP()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    string query = "SELECT maSP, tenSP FROM SanPham";
+                    SqlDataAdapter adapter = new SqlDataAdapter(query, connection);
+                    DataTable dt = new DataTable();
+
+                    adapter.Fill(dt);
+
+                    // Gán dữ liệu vào ComboBox maSP
+                    cbbMaSP.DataSource = dt;
+                    cbbMaSP.DisplayMember = "maSP";
+                    cbbMaSP.ValueMember = "maSP";
+                    cbbMaSP.Tag = dt; // Lưu DataTable vào Tag
+                    cbbMaSP.SelectedIndex = -1; // Không chọn gì ban đầu
+                }
+
+                // Gắn sự kiện
+                cbbMaSP.SelectedIndexChanged += cbbMaSP_SelectedIndexChanged;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải mã khách hàng: " + ex.Message);
+            }
+        }
+
+        private void cbbMaSP_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbbMaSP.SelectedIndex >= 0) // Kiểm tra nếu đã chọn giá trị
+            {
+                try
+                {
+                    //// Lấy DataTable từ Tag của ComboBox
+                    //DataTable dt = cbbMaSP.Tag as DataTable;
+
+                    //// Tìm hàng có mã khách hàng được chọn
+                    //if (cbbMaSP.SelectedValue != null)
+                    //{
+                    //    DataRow[] rows = dt.Select("maSP = '" + cbbMaSP.SelectedValue.ToString() + "'");
+                    //    if (rows.Length > 0)
+                    //    {
+                    //        txtTenSP.Text = rows[0]["tenSP"].ToString(); // Gán tên khách hàng vào TextBox
+                    //    }
+                    //}
+                    string maSP = cbbMaSP.SelectedValue.ToString(); // Get selected maSP
+                    LoadSanPhamInfo(maSP); // Load product information
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi truy xuất tên sản phẩm: " + ex.Message);
+                }
+            }
+        }
+
         private void DataCTHD_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
@@ -374,6 +432,99 @@ namespace XML_QuanLyBanMayAnh.UI
             TrangChu tc = new TrangChu();
             tc.Show();
             this.Close();
+        }
+
+        private void btnThemHD_Click(object sender, EventArgs e)
+        {
+            txtMaDH.Clear();
+            txttenKH.Clear();
+            txttennhanvien.Clear();
+            dtpngaydathang.Value = DateTime.Now;
+            cbbKhachhang.SelectedIndex = -1;
+            cbbNhanVien.SelectedIndex = -1;
+
+            cbbMaSP.SelectedIndex = -1;
+            txtSoluongDat.Clear();
+            txtDonGia.Clear();
+            txtTenSP.Clear();
+            txtHang.Clear();
+
+            // Xóa DataGridView for Chi Tiết Hóa Đơn
+            DataCTHD.DataSource = null;
+            DataCTHD.Rows.Clear();
+        }
+
+        private void btnThemHDCT_Click(object sender, EventArgs e)
+        {
+            cbbMaSP.SelectedIndex = -1;
+            txtSoluongDat.Clear();
+            txtDonGia.Clear();
+            txtTenSP.Clear();
+            txtHang.Clear();
+        }
+
+        private void btnLuuHD_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra dữ liệu nhập vào
+            if (string.IsNullOrWhiteSpace(txtMaDH.Text) ||
+                string.IsNullOrWhiteSpace(cbbKhachhang.Text) ||
+                string.IsNullOrWhiteSpace(cbbNhanVien.Text) )
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                // Thêm dữ liệu vào SQL Server
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+                    // Kiểm tra mã sản phẩm đã tồn tại hay chưa
+                    string checkSql = "SELECT COUNT(*) FROM HoaDonBan WHERE maHD = @maHD";
+                    SqlCommand checkCmd = new SqlCommand(checkSql, connection);
+                    checkCmd.Parameters.AddWithValue("@maHD", txtMaDH.Text);
+
+                    int count = (int)checkCmd.ExecuteScalar(); // Trả về số lượng bản ghi
+                    if (count > 0)
+                    {
+                        MessageBox.Show($"Sản phẩm có mã '{txtMaDH.Text}' đã tồn tại. Vui lòng kiểm tra và thêm lại!",
+                                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // Nếu không trùng thì thêm dữ liệu mới
+                    string sql = "INSERT INTO HoaDonBan (maHD, maNV, maKH, ngayLapDon )" +
+                                 "VALUES (@maHD, @maNV, @maKH, @ngayLapDon)";
+                    SqlCommand cmd = new SqlCommand(sql, connection);
+
+                    cmd.Parameters.AddWithValue("@maHD", txtMaDH.Text);
+                    cmd.Parameters.AddWithValue("@maNV", cbbNhanVien.SelectedValue);
+                    cmd.Parameters.AddWithValue("@maKH", cbbKhachhang.SelectedValue); 
+                    cmd.Parameters.AddWithValue("@ngayLapDon", dtpngaydathang.Value);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Load lại dữ liệu lên DataGridView
+                LoadData();
+                MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Ghi lại dữ liệu vào XML từ SQL Server
+                string sqlSelect = "SELECT * FROM HoaDonBan";
+                taoXML.TaoXML(sqlSelect, "HoaDonBan", fileXML);
+
+                // Xóa dữ liệu nhập
+                txtMaDH.Clear();
+                txttenKH.Clear();
+                txttennhanvien.Clear();
+                dtpngaydathang.Value = DateTime.Now;
+                cbbKhachhang.SelectedIndex = -1;
+                cbbNhanVien.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi thêm dữ liệu: " + ex.Message);
+            }
         }
     }
 }
