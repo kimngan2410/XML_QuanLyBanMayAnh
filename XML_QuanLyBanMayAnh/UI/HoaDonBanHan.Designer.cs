@@ -28,13 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Button6 = new System.Windows.Forms.Button();
+            this.btnLuuHD = new System.Windows.Forms.Button();
             this.Button4 = new System.Windows.Forms.Button();
             this.dgvHD = new System.Windows.Forms.DataGridView();
             this.txttennhanvien = new System.Windows.Forms.TextBox();
             this.Label5 = new System.Windows.Forms.Label();
             this.txttenKH = new System.Windows.Forms.TextBox();
-            this.Button3 = new System.Windows.Forms.Button();
+            this.btnXoaHD = new System.Windows.Forms.Button();
             this.Label3 = new System.Windows.Forms.Label();
             this.cbbKhachhang = new System.Windows.Forms.ComboBox();
             this.cbbNhanVien = new System.Windows.Forms.ComboBox();
@@ -57,11 +57,15 @@
             this.lblMaSP = new System.Windows.Forms.Label();
             this.dtpngaydathang = new System.Windows.Forms.DateTimePicker();
             this.Label1 = new System.Windows.Forms.Label();
-            this.Button2 = new System.Windows.Forms.Button();
+            this.btnSuaHD = new System.Windows.Forms.Button();
             this.txtTenNV = new System.Windows.Forms.Panel();
+            this.btnLuuHDCT = new System.Windows.Forms.Button();
+            this.btnXoaHDCT = new System.Windows.Forms.Button();
+            this.btnSuaHDCT = new System.Windows.Forms.Button();
+            this.btnThemHDCT = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.DataCTHD = new System.Windows.Forms.DataGridView();
-            this.Button1 = new System.Windows.Forms.Button();
+            this.btnThemHD = new System.Windows.Forms.Button();
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.Label9 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
@@ -74,25 +78,26 @@
             this.GroupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Button6
+            // btnLuuHD
             // 
-            this.Button6.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button6.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.luu_icon;
-            this.Button6.Location = new System.Drawing.Point(543, 495);
-            this.Button6.Margin = new System.Windows.Forms.Padding(2);
-            this.Button6.Name = "Button6";
-            this.Button6.Size = new System.Drawing.Size(94, 33);
-            this.Button6.TabIndex = 9;
-            this.Button6.Text = " Lưu";
-            this.Button6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button6.UseVisualStyleBackColor = true;
+            this.btnLuuHD.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuuHD.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.luu_icon;
+            this.btnLuuHD.Location = new System.Drawing.Point(543, 495);
+            this.btnLuuHD.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLuuHD.Name = "btnLuuHD";
+            this.btnLuuHD.Size = new System.Drawing.Size(94, 33);
+            this.btnLuuHD.TabIndex = 9;
+            this.btnLuuHD.Text = " Lưu";
+            this.btnLuuHD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLuuHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLuuHD.UseVisualStyleBackColor = true;
+            this.btnLuuHD.Click += new System.EventHandler(this.btnLuuHD_Click);
             // 
             // Button4
             // 
             this.Button4.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button4.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.exit_icon;
-            this.Button4.Location = new System.Drawing.Point(403, 719);
+            this.Button4.Location = new System.Drawing.Point(415, 763);
             this.Button4.Margin = new System.Windows.Forms.Padding(2);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(94, 33);
@@ -144,19 +149,20 @@
             this.txttenKH.Size = new System.Drawing.Size(204, 24);
             this.txttenKH.TabIndex = 25;
             // 
-            // Button3
+            // btnXoaHD
             // 
-            this.Button3.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button3.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.delete_icon;
-            this.Button3.Location = new System.Drawing.Point(763, 495);
-            this.Button3.Margin = new System.Windows.Forms.Padding(2);
-            this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(94, 33);
-            this.Button3.TabIndex = 5;
-            this.Button3.Text = " Xoá";
-            this.Button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button3.UseVisualStyleBackColor = true;
+            this.btnXoaHD.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoaHD.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.delete_icon;
+            this.btnXoaHD.Location = new System.Drawing.Point(763, 495);
+            this.btnXoaHD.Margin = new System.Windows.Forms.Padding(2);
+            this.btnXoaHD.Name = "btnXoaHD";
+            this.btnXoaHD.Size = new System.Drawing.Size(94, 33);
+            this.btnXoaHD.TabIndex = 5;
+            this.btnXoaHD.Text = " Xoá";
+            this.btnXoaHD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnXoaHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnXoaHD.UseVisualStyleBackColor = true;
+            this.btnXoaHD.Click += new System.EventHandler(this.btnXoaHD_Click);
             // 
             // Label3
             // 
@@ -391,37 +397,102 @@
             this.Label1.TabIndex = 0;
             this.Label1.Text = "Mã hoá đơn:";
             // 
-            // Button2
+            // btnSuaHD
             // 
-            this.Button2.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button2.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.edit_icon1;
-            this.Button2.Location = new System.Drawing.Point(654, 495);
-            this.Button2.Margin = new System.Windows.Forms.Padding(2);
-            this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(94, 33);
-            this.Button2.TabIndex = 4;
-            this.Button2.Text = " Sửa";
-            this.Button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button2.UseVisualStyleBackColor = true;
+            this.btnSuaHD.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSuaHD.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.edit_icon1;
+            this.btnSuaHD.Location = new System.Drawing.Point(654, 495);
+            this.btnSuaHD.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSuaHD.Name = "btnSuaHD";
+            this.btnSuaHD.Size = new System.Drawing.Size(94, 33);
+            this.btnSuaHD.TabIndex = 4;
+            this.btnSuaHD.Text = " Sửa";
+            this.btnSuaHD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSuaHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSuaHD.UseVisualStyleBackColor = true;
+            this.btnSuaHD.Click += new System.EventHandler(this.btnSuaHD_Click);
             // 
             // txtTenNV
             // 
+            this.txtTenNV.Controls.Add(this.btnLuuHDCT);
+            this.txtTenNV.Controls.Add(this.btnXoaHDCT);
+            this.txtTenNV.Controls.Add(this.btnSuaHDCT);
+            this.txtTenNV.Controls.Add(this.btnThemHDCT);
             this.txtTenNV.Controls.Add(this.groupBox4);
             this.txtTenNV.Controls.Add(this.GroupBox3);
-            this.txtTenNV.Controls.Add(this.Button6);
-            this.txtTenNV.Controls.Add(this.Button3);
+            this.txtTenNV.Controls.Add(this.btnLuuHD);
+            this.txtTenNV.Controls.Add(this.btnXoaHD);
             this.txtTenNV.Controls.Add(this.Button4);
-            this.txtTenNV.Controls.Add(this.Button2);
-            this.txtTenNV.Controls.Add(this.Button1);
+            this.txtTenNV.Controls.Add(this.btnSuaHD);
+            this.txtTenNV.Controls.Add(this.btnThemHD);
             this.txtTenNV.Controls.Add(this.GroupBox2);
             this.txtTenNV.Controls.Add(this.Label9);
             this.txtTenNV.Controls.Add(this.GroupBox1);
             this.txtTenNV.Location = new System.Drawing.Point(9, 12);
             this.txtTenNV.Margin = new System.Windows.Forms.Padding(2);
             this.txtTenNV.Name = "txtTenNV";
-            this.txtTenNV.Size = new System.Drawing.Size(914, 764);
+            this.txtTenNV.Size = new System.Drawing.Size(903, 805);
             this.txtTenNV.TabIndex = 1;
+            // 
+            // btnLuuHDCT
+            // 
+            this.btnLuuHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLuuHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.luu_icon;
+            this.btnLuuHDCT.Location = new System.Drawing.Point(543, 720);
+            this.btnLuuHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnLuuHDCT.Name = "btnLuuHDCT";
+            this.btnLuuHDCT.Size = new System.Drawing.Size(94, 33);
+            this.btnLuuHDCT.TabIndex = 32;
+            this.btnLuuHDCT.Text = " Lưu";
+            this.btnLuuHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnLuuHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLuuHDCT.UseVisualStyleBackColor = true;
+            this.btnLuuHDCT.Click += new System.EventHandler(this.btnLuuHDCT_Click);
+            // 
+            // btnXoaHDCT
+            // 
+            this.btnXoaHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoaHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.delete_icon;
+            this.btnXoaHDCT.Location = new System.Drawing.Point(763, 720);
+            this.btnXoaHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnXoaHDCT.Name = "btnXoaHDCT";
+            this.btnXoaHDCT.Size = new System.Drawing.Size(94, 33);
+            this.btnXoaHDCT.TabIndex = 31;
+            this.btnXoaHDCT.Text = " Xoá";
+            this.btnXoaHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnXoaHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnXoaHDCT.UseVisualStyleBackColor = true;
+            this.btnXoaHDCT.Click += new System.EventHandler(this.btnXoaHDCT_Click);
+            // 
+            // btnSuaHDCT
+            // 
+            this.btnSuaHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSuaHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.edit_icon1;
+            this.btnSuaHDCT.Location = new System.Drawing.Point(654, 720);
+            this.btnSuaHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnSuaHDCT.Name = "btnSuaHDCT";
+            this.btnSuaHDCT.Size = new System.Drawing.Size(94, 33);
+            this.btnSuaHDCT.TabIndex = 30;
+            this.btnSuaHDCT.Text = " Sửa";
+            this.btnSuaHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSuaHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSuaHDCT.UseVisualStyleBackColor = true;
+            this.btnSuaHDCT.Click += new System.EventHandler(this.btnSuaHDCT_Click);
+            // 
+            // btnThemHDCT
+            // 
+            this.btnThemHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThemHDCT.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.add_icon;
+            this.btnThemHDCT.Location = new System.Drawing.Point(431, 720);
+            this.btnThemHDCT.Margin = new System.Windows.Forms.Padding(2);
+            this.btnThemHDCT.Name = "btnThemHDCT";
+            this.btnThemHDCT.Size = new System.Drawing.Size(95, 33);
+            this.btnThemHDCT.TabIndex = 29;
+            this.btnThemHDCT.Text = " Thêm";
+            this.btnThemHDCT.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnThemHDCT.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnThemHDCT.UseVisualStyleBackColor = true;
+            this.btnThemHDCT.Click += new System.EventHandler(this.btnThemHDCT_Click);
             // 
             // groupBox4
             // 
@@ -431,7 +502,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox4.Size = new System.Drawing.Size(871, 189);
+            this.groupBox4.Size = new System.Drawing.Size(871, 205);
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "CHI TIẾT HÓA ĐƠN";
@@ -448,19 +519,20 @@
             this.DataCTHD.TabIndex = 0;
             this.DataCTHD.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataCTHD_CellClick);
             // 
-            // Button1
+            // btnThemHD
             // 
-            this.Button1.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button1.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.add_icon;
-            this.Button1.Location = new System.Drawing.Point(431, 495);
-            this.Button1.Margin = new System.Windows.Forms.Padding(2);
-            this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(95, 33);
-            this.Button1.TabIndex = 3;
-            this.Button1.Text = " Thêm";
-            this.Button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.Button1.UseVisualStyleBackColor = true;
+            this.btnThemHD.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThemHD.Image = global::XML_QuanLyBanMayAnh.Properties.Resources.add_icon;
+            this.btnThemHD.Location = new System.Drawing.Point(431, 495);
+            this.btnThemHD.Margin = new System.Windows.Forms.Padding(2);
+            this.btnThemHD.Name = "btnThemHD";
+            this.btnThemHD.Size = new System.Drawing.Size(95, 33);
+            this.btnThemHD.TabIndex = 3;
+            this.btnThemHD.Text = " Thêm";
+            this.btnThemHD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnThemHD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnThemHD.UseVisualStyleBackColor = true;
+            this.btnThemHD.Click += new System.EventHandler(this.btnThemHD_Click);
             // 
             // GroupBox2
             // 
@@ -517,7 +589,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(932, 518);
+            this.ClientSize = new System.Drawing.Size(932, 524);
             this.Controls.Add(this.txtTenNV);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "HoaDonBanHan";
@@ -539,13 +611,13 @@
 
         #endregion
 
-        internal System.Windows.Forms.Button Button6;
+        internal System.Windows.Forms.Button btnLuuHD;
         internal System.Windows.Forms.Button Button4;
         internal System.Windows.Forms.DataGridView dgvHD;
         internal System.Windows.Forms.TextBox txttennhanvien;
         internal System.Windows.Forms.Label Label5;
         internal System.Windows.Forms.TextBox txttenKH;
-        internal System.Windows.Forms.Button Button3;
+        internal System.Windows.Forms.Button btnXoaHD;
         internal System.Windows.Forms.Label Label3;
         internal System.Windows.Forms.ComboBox cbbKhachhang;
         internal System.Windows.Forms.ComboBox cbbNhanVien;
@@ -568,13 +640,17 @@
         internal System.Windows.Forms.Label lblMaSP;
         internal System.Windows.Forms.DateTimePicker dtpngaydathang;
         internal System.Windows.Forms.Label Label1;
-        internal System.Windows.Forms.Button Button2;
+        internal System.Windows.Forms.Button btnSuaHD;
         internal System.Windows.Forms.Panel txtTenNV;
-        internal System.Windows.Forms.Button Button1;
+        internal System.Windows.Forms.Button btnThemHD;
         internal System.Windows.Forms.GroupBox GroupBox2;
         internal System.Windows.Forms.Label Label9;
         internal System.Windows.Forms.GroupBox GroupBox1;
         internal System.Windows.Forms.GroupBox groupBox4;
         internal System.Windows.Forms.DataGridView DataCTHD;
+        internal System.Windows.Forms.Button btnLuuHDCT;
+        internal System.Windows.Forms.Button btnXoaHDCT;
+        internal System.Windows.Forms.Button btnSuaHDCT;
+        internal System.Windows.Forms.Button btnThemHDCT;
     }
 }
