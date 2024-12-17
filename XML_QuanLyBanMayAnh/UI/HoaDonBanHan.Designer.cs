@@ -69,6 +69,7 @@
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.Label9 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnInHD = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHD)).BeginInit();
             this.GroupBox3.SuspendLayout();
             this.txtTenNV.SuspendLayout();
@@ -414,6 +415,7 @@
             // 
             // txtTenNV
             // 
+            this.txtTenNV.Controls.Add(this.btnInHD);
             this.txtTenNV.Controls.Add(this.btnLuuHDCT);
             this.txtTenNV.Controls.Add(this.btnXoaHDCT);
             this.txtTenNV.Controls.Add(this.btnSuaHDCT);
@@ -583,6 +585,16 @@
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "THÔNG TIN HOÁ ĐƠN";
             // 
+            // btnInHD
+            // 
+            this.btnInHD.Location = new System.Drawing.Point(782, 27);
+            this.btnInHD.Name = "btnInHD";
+            this.btnInHD.Size = new System.Drawing.Size(75, 23);
+            this.btnInHD.TabIndex = 33;
+            this.btnInHD.Text = "In hóa đơn";
+            this.btnInHD.UseVisualStyleBackColor = true;
+            this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
+            // 
             // HoaDonBanHan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -652,5 +664,6 @@
         internal System.Windows.Forms.Button btnXoaHDCT;
         internal System.Windows.Forms.Button btnSuaHDCT;
         internal System.Windows.Forms.Button btnThemHDCT;
+        private System.Windows.Forms.Button btnInHD;
     }
 }
