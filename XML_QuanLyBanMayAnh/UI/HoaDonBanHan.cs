@@ -1093,9 +1093,10 @@ namespace XML_QuanLyBanMayAnh.UI
                                         ),
                     new XElement("body",
                         new XElement("h2", $"Chi Tiết Hóa Đơn - Mã Hóa Đơn: {OldMaHD}"),
-                        new XElement("strong", "Khách Hàng: "), tenKhachHang),
                         new XElement("p",
-                        new XElement("strong", "Nhân Viên Lập Đơn: "), tenNhanVien),
+                            new XElement("strong", "Khách Hàng: "), tenKhachHang),
+                        new XElement("p",
+                            new XElement("strong", "Nhân Viên Lập Đơn: "), tenNhanVien),
 
                         new XElement("table",
                             new XElement("tr",
