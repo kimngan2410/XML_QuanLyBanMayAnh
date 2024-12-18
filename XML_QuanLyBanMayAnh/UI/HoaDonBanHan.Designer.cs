@@ -59,6 +59,7 @@
             this.Label1 = new System.Windows.Forms.Label();
             this.btnSuaHD = new System.Windows.Forms.Button();
             this.txtTenNV = new System.Windows.Forms.Panel();
+            this.btnInHD = new System.Windows.Forms.Button();
             this.btnLuuHDCT = new System.Windows.Forms.Button();
             this.btnXoaHDCT = new System.Windows.Forms.Button();
             this.btnSuaHDCT = new System.Windows.Forms.Button();
@@ -69,7 +70,6 @@
             this.GroupBox2 = new System.Windows.Forms.GroupBox();
             this.Label9 = new System.Windows.Forms.Label();
             this.GroupBox1 = new System.Windows.Forms.GroupBox();
-            this.btnInHD = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHD)).BeginInit();
             this.GroupBox3.SuspendLayout();
             this.txtTenNV.SuspendLayout();
@@ -424,6 +424,16 @@
             this.txtTenNV.Size = new System.Drawing.Size(1204, 991);
             this.txtTenNV.TabIndex = 1;
             // 
+            // btnInHD
+            // 
+            this.btnInHD.Location = new System.Drawing.Point(1033, 15);
+            this.btnInHD.Name = "btnInHD";
+            this.btnInHD.Size = new System.Drawing.Size(126, 36);
+            this.btnInHD.TabIndex = 33;
+            this.btnInHD.Text = "In hóa đơn";
+            this.btnInHD.UseVisualStyleBackColor = true;
+            this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
+            // 
             // btnLuuHDCT
             // 
             this.btnLuuHDCT.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -571,16 +581,6 @@
             this.GroupBox1.TabIndex = 0;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "THÔNG TIN HOÁ ĐƠN";
-            // 
-            // btnInHD
-            // 
-            this.btnInHD.Location = new System.Drawing.Point(782, 27);
-            this.btnInHD.Name = "btnInHD";
-            this.btnInHD.Size = new System.Drawing.Size(75, 23);
-            this.btnInHD.TabIndex = 33;
-            this.btnInHD.Text = "In hóa đơn";
-            this.btnInHD.UseVisualStyleBackColor = true;
-            this.btnInHD.Click += new System.EventHandler(this.btnInHD_Click);
             // 
             // HoaDonBanHan
             // 

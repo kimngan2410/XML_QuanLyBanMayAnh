@@ -1057,8 +1057,8 @@ namespace XML_QuanLyBanMayAnh.UI
                 var html = new XElement("html",
                     new XElement("head",
                         new XElement("style", @"
-                    table { width: 100%; border: 1px solid black; border-collapse: collapse; }
-                    th, td { border: 1px solid gray; padding: 8px; text-align: center; }
+                    table { width: 60%; border: 1px solid black; border-collapse: collapse; }
+                    th, td { border: 1px solid gray; padding: 8px; text-align: left; }
                     th { background-color: lightgreen; font-weight: bold; }")
                     ),
                     new XElement("body",
@@ -1080,8 +1080,8 @@ namespace XML_QuanLyBanMayAnh.UI
                                 new XElement("td", el.Element("maHD")?.Value ?? "N/A"),
                                 new XElement("td", maSP ?? "N/A"),
                                 new XElement("td", soLuongDat.ToString()),
-                                new XElement("td", new XAttribute("style", "text-align:right"), donGia.ToString("N0")),
-                                new XElement("td", new XAttribute("style", "text-align:right"), thanhTien.ToString("N0"))
+                                new XElement("td", donGia.ToString("N0")),
+                                new XElement("td", thanhTien.ToString("N0"))
                             )
                         )
                     )
