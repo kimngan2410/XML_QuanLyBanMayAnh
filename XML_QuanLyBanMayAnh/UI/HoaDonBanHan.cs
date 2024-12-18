@@ -1005,6 +1005,9 @@ namespace XML_QuanLyBanMayAnh.UI
 
 
         XDocument xItem;
+        private string tenKhachHang = string.Empty;
+        private string tenNhanVien = string.Empty;
+
         private void inHoaDon()
         {
             if (string.IsNullOrWhiteSpace(OldMaHD))
@@ -1036,6 +1039,33 @@ namespace XML_QuanLyBanMayAnh.UI
                     return;
                 }
 
+                // Lấy thông tin tên khách hàng và nhân viên
+                using (SqlConnection connection = new SqlConnection(strCon))
+                {
+                    connection.Open();
+                    string query = @"
+                                SELECT hd.maHD, kh.tenKH, nv.tenNV
+                                FROM HoaDonBan hd
+                                INNER JOIN KhachHang kh ON hd.maKH = kh.maKH
+                                INNER JOIN NhanVien nv ON hd.maNV = nv.maNV
+                                WHERE hd.maHD = @maHD";
+
+                    SqlCommand cmd = new SqlCommand(query, connection);
+                    cmd.Parameters.AddWithValue("@maHD", OldMaHD);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        tenKhachHang = reader["tenKH"].ToString();
+                        tenNhanVien = reader["tenNV"].ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không tìm thấy thông tin khách hàng hoặc nhân viên cho hóa đơn này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+                }
+
                 // Lấy đơn giá từ bảng SanPham
                 Dictionary<string, string> donGiaDict = new Dictionary<string, string>();
                 using (SqlConnection connection = new SqlConnection(strCon))
@@ -1057,12 +1087,16 @@ namespace XML_QuanLyBanMayAnh.UI
                 var html = new XElement("html",
                     new XElement("head",
                         new XElement("style", @"
-                    table { width: 60%; border: 1px solid black; border-collapse: collapse; }
-                    th, td { border: 1px solid gray; padding: 8px; text-align: left; }
-                    th { background-color: lightgreen; font-weight: bold; }")
-                    ),
+                                    table { width: 60%; border: 1px solid black; border-collapse: collapse; }
+                                    th, td { border: 1px solid gray; padding: 8px; text-align: left; }
+                                    th { background-color: lightgreen; font-weight: bold; }")
+                                        ),
                     new XElement("body",
                         new XElement("h2", $"Chi Tiết Hóa Đơn - Mã Hóa Đơn: {OldMaHD}"),
+                        new XElement("strong", "Khách Hàng: "), tenKhachHang),
+                        new XElement("p",
+                        new XElement("strong", "Nhân Viên Lập Đơn: "), tenNhanVien),
+
                         new XElement("table",
                             new XElement("tr",
                                 new XElement("th", "Mã Hóa Đơn"),
@@ -1101,5 +1135,6 @@ namespace XML_QuanLyBanMayAnh.UI
         {
             inHoaDon();
         }
+
     }
 }
