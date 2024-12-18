@@ -1013,7 +1013,7 @@ namespace XML_QuanLyBanMayAnh.UI
                 return;
             }
 
-            string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "./ChiTietHoaDon.xml");
+            string xmlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Data", "ChiTietHoaDon.xml");
             string pathHTML = "ChiTietHoaDon.html";
 
             try
